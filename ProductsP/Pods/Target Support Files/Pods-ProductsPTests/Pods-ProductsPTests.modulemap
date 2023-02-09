@@ -1,0 +1,6 @@
+module Pods_ProductsPTests {
+  umbrella header "Pods-ProductsPTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
