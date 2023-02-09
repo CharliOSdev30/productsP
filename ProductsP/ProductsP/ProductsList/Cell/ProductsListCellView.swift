@@ -6,3 +6,14 @@
 //
 
 import Foundation
+import UIKit
+
+class ProductsListCellView: UITableViewCell {
+
+    // MARK: - IBOutlet
+    
+    @IBOutlet weak var productImage: UIImageView!
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var goDetailButton: UIButton!
+    
+}

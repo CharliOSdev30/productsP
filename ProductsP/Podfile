@@ -9,6 +9,7 @@ target 'ProductsP' do
 
     pod 'RxSwift'
     pod 'RxCocoa'
+    pod 'SwiftLint'
 
   end
 
