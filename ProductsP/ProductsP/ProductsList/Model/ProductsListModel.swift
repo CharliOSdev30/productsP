@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct ProductsListModel {
+
+    let products = ["Seguro de Vida", "Cuenta de Ahorros", "Préstamos personales", "Tarjetas de Crédito", "Asesor Financiero"]
+    let imageProducts = ["", "", "", "", ""]
+}
