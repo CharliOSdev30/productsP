@@ -176,8 +176,8 @@ class ProductDetailViewController: UIViewController {
     }
 
     private func dollarToCad(price: Double) -> Double {
-        var firtsStep = price * self.dollarToEuro
-        var secondStep = firtsStep * self.euroToCad
+        let firtsStep = price * self.dollarToEuro
+        let secondStep = firtsStep * self.euroToCad
 
         return secondStep
     }

@@ -27,6 +27,6 @@ class ProductDetailViewModel {
     }
 
     func goBack() {
-        navigator.pop(from: view ?? UIViewController())
+        navigator.pop()
     }
 }

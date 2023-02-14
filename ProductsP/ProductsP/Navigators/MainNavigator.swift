@@ -9,19 +9,32 @@ import UIKit
 
 class MainNavigator {
 
+    var productsList: UIViewController {
+        return createProductsListViewController()
+    }
+    var productDetail: UIViewController {
+        return createProductDetailViewController()
+    }
     private var sourceView: UIViewController?
+
+    private func createProductsListViewController() -> UIViewController {
+        return ProductsListViewController()
+    }
+
+    private func createProductDetailViewController() -> UIViewController {
+        return ProductDetailViewController()
+    }
 
     func setSourceView(_ sourceView: UIViewController?){
         guard let view = sourceView else {fatalError("Error desconocido")}
         self.sourceView = view
     }
 
-    func  toProductDetail() {
-//        let detailView = ProductDetailViewModel().viewController
-//        sourceView?.navigationController?.pushViewController(detailView, animated: true)
+    func toProductDetail() {
+        sourceView?.navigationController?.pushViewController(productDetail, animated: true)
     }
 
-    func pop(from viewController: UIViewController) {
-        viewController.navigationController?.popViewController(animated: true)
+    func pop() {
+        sourceView?.navigationController?.pushViewController(productsList, animated: true)
     }
 }

@@ -13,7 +13,6 @@ class ProductsListViewController: UIViewController {
 
     // MARK: - Variables
 
-    private var navigator = MainNavigator()
     private var viewModel = ProductsListViewModel()
     private var product = ProductsListModel()
     private let cellSelected = PublishSubject<Int>()
@@ -27,10 +26,10 @@ class ProductsListViewController: UIViewController {
 
     override func viewDidLoad() {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        self.viewModel.bind(view: self, navigator: self.navigator)
+        self.viewModel.bind(view: self)
         setupUI()
         setupTableView()
-        self.tableView.reloadData()
+        self.tableView.register(UINib(nibName: "ProductsListCellView", bundle: nil), forCellReuseIdentifier: "ProductsListCellView")
     }
 
     private func setupUI() {
@@ -41,6 +40,10 @@ class ProductsListViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.layer.cornerRadius = 5
+    }
+
+    @objc func navigateToProductDetail(sender: UIButton) {
+        viewModel.goToProductDetail()
     }
 }
 
@@ -53,14 +56,16 @@ extension ProductsListViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ProductsListCellView.self)) as! ProductsListCellView
-        product.products.forEach { product in
-            cell.productNameLabel.text = product
+        if let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ProductsListCellView.self)) as? ProductsListCellView {
+
+            cell.productNameLabel.text = product.products[indexPath.row]
+            cell.productImage.image = UIImage(systemName: product.imageProducts[indexPath.row])
+            cell.goDetailButton.addTarget(self, action: #selector(navigateToProductDetail(sender:)), for: .touchUpInside)
+
+            return cell
+        } else {
+            return UITableViewCell()
         }
-        product.imageProducts.forEach { image in
-            cell.productImage.image = UIImage(named: image)
-        }
-        return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
