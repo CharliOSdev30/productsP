@@ -13,6 +13,7 @@ class ProductsListViewController: UIViewController {
 
     // MARK: - Variables
 
+    private var navigator = HomeNavigator()
     private var viewModel = ProductsListViewModel()
     private var product = ProductsListModel()
     private let cellSelected = PublishSubject<Int>()
@@ -26,7 +27,7 @@ class ProductsListViewController: UIViewController {
 
     override func viewDidLoad() {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        self.viewModel.bind(view: self)
+        self.viewModel.bind(view: self, navigator: self.navigator)
         setupUI()
         setupTableView()
         self.tableView.register(UINib(nibName: "ProductsListCellView", bundle: nil), forCellReuseIdentifier: "ProductsListCellView")
@@ -73,6 +74,7 @@ extension ProductsListViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.goToProductDetail()
         self.cellSelected.onNext(indexPath.row)
     }
 }

@@ -12,12 +12,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+//
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        let viewController = HomeNavigator().productsList
+//        let navController = UINavigationController(rootViewController: viewController)
+//
+//        window?.rootViewController = navController
+//        window?.makeKeyAndVisible()
+//        window?.windowScene = windowScene
+
         let storyboard = UIStoryboard(name: "ProductsListViewController", bundle: nil)
         guard let windowScene = scene as? UIWindowScene else { return }
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = storyboard.instantiateInitialViewController()
+
+        let productsListVC = storyboard.instantiateInitialViewController() as! ProductsListViewController
+        let navigationController = UINavigationController(rootViewController: productsListVC)
+
+        window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

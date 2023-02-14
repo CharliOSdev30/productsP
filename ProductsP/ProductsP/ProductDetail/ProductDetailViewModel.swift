@@ -10,12 +10,13 @@ import RxSwift
 
 class ProductDetailViewModel {
 
-    private var navigator = MainNavigator()
     private var managerConnection = ManagerConnections()
     private(set) weak var view: ProductDetailViewController?
+    private var navigator: DetailNavigator?
 
-    func bind(view: ProductDetailViewController) {
+    func bind(view: ProductDetailViewController, navigator: DetailNavigator) {
         self.view = view
+        self.navigator = navigator
     }
 
     func getExchangeType() -> Observable<[ExchangesTypes]> {
@@ -27,6 +28,6 @@ class ProductDetailViewModel {
     }
 
     func goBack() {
-        navigator.pop()
+        self.navigator?.goBackMenu()
     }
 }

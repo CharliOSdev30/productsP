@@ -10,13 +10,14 @@ import Foundation
 class ProductsListViewModel {
 
     private weak var view: ProductsListViewController?
-    private var navigator = MainNavigator()
+    private var navigator: HomeNavigator?
 
-    func bind(view: ProductsListViewController) {
+    func bind(view: ProductsListViewController, navigator: HomeNavigator) {
         self.view = view
+        self.navigator = navigator
     }
 
     func goToProductDetail() {
-        self.navigator.toProductDetail()
+        self.navigator?.toProductDetail()
     }
 }

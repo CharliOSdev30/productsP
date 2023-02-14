@@ -31,6 +31,7 @@ class ProductDetailViewController: UIViewController {
     
     //    MARK: - Variables
 
+    private var navigator = DetailNavigator()
     private var viewModel = ProductDetailViewModel()
     private var disposeBag = DisposeBag()
     private var exchange = [ExchangesTypes]()
@@ -51,7 +52,7 @@ class ProductDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.bind(view: self)
+        viewModel.bind(view: self, navigator: self.navigator)
         self.getExchanges()
         self.changeEuroToDollars()
         self.changeCadToEuro()
@@ -233,7 +234,7 @@ class ProductDetailViewController: UIViewController {
     // MARK: - @IBActions
 
     @IBAction func backButtonAction(_ sender: Any) {
-        self.viewModel.goBack()
+        viewModel.goBack()
     }
     
 }
