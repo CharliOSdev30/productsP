@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class ProductsListViewController: UIViewController {
 
@@ -14,7 +15,8 @@ class ProductsListViewController: UIViewController {
 
     private var navigator = MainNavigator()
     private var viewModel = ProductsListViewModel()
-    private var products = [ProductsListModel]()
+    private var product = ProductsListModel()
+    private let cellSelected = PublishSubject<Int>()
     
     // MARK: - IBOutlet
 
@@ -37,7 +39,8 @@ class ProductsListViewController: UIViewController {
 
     private func setupTableView() {
         self.tableView.delegate = self
-        self.tableView.layer.borderWidth = 5
+        self.tableView.dataSource = self
+        self.tableView.layer.cornerRadius = 5
     }
 }
 
@@ -46,12 +49,17 @@ class ProductsListViewController: UIViewController {
 extension ProductsListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.products.count
+        return self.product.products.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ProductsListCellView.self)) as! ProductsListCellView
-        
+        product.products.forEach { product in
+            cell.productNameLabel.text = product
+        }
+        product.imageProducts.forEach { image in
+            cell.productImage.image = UIImage(named: image)
+        }
         return cell
     }
 
@@ -60,5 +68,6 @@ extension ProductsListViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.cellSelected.onNext(indexPath.row)
     }
 }
